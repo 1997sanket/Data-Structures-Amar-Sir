@@ -1,0 +1,7 @@
+1. When we "Dequeue()" only our "front" is increased. But the memory from which we "dequed" cannot be used 
+   again.
+
+2. Means, if we say "Enqueue(50)", then we will get a message "Queue" is full. Even though we just "dequeued"
+   and technically 1 memory was available.
+
+3. This is where Circular Queue comes into picture. 

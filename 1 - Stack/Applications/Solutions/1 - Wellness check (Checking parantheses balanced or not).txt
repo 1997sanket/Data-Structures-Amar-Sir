@@ -1,0 +1,107 @@
+#include<iostream>
+
+using namespace std;
+
+char S[100];
+int tos;
+int MaxSize;
+
+//Initialize Stack size
+void initSize(int size) {
+
+	MaxSize = size;
+	tos = -1;	//tos starts from -1
+}
+
+//Whether Stack is full or not
+char isFull() {
+	if (tos == MaxSize - 1)
+		return 1;
+	else
+		return 0;
+}
+
+
+//Push 
+void push(char e) {
+	tos++;
+	S[tos] = e;	//For the first element S[0] = 10;
+}
+
+
+//Check whether Stack is empty
+char isEmpty() {
+	if (tos == -1) return 1;
+
+	else return 0;
+}
+
+
+//Pop
+char pop() {
+
+	char temp = S[tos];	//First secure the current element
+	tos--;	//decrement tos
+
+	return temp;	//return the secured element
+}
+
+
+//Top most element
+char atTop() {
+	return S[tos];
+}
+
+
+//Printing Stack(LIFO print)
+void printStack() {
+	int i;
+
+	for (i = tos; i >= 0; i--) {
+		cout << S[i] << " ";
+	}
+
+	cout << endl;
+}
+
+int main() {
+
+	char arr[100];
+	int i, length;
+	
+	cout << "Enter opening and closing brackets " << endl;
+
+	//Taking array of brackets from user
+	cin >> arr;
+
+	length = strlen(arr);
+	cout << length << endl;
+
+	//Making a stack of this length and getting "tos" to point at -1th position
+	initSize(length);
+
+	for (i = 0; i < length; i++) {
+
+		if (arr[i] == '(') {
+			push(arr[i]);	//push '(' in stack
+			continue;
+		}
+
+		else if (arr[i] == ')') {
+			char e = pop();
+			if (e == '(') {	//If retrieved character is a '(' then Ok
+				continue;
+			}
+			
+		}
+	}
+
+	//IF stack is not empty then "Unbalanced brackets" 
+	if (tos != isEmpty()) {
+		cout << "Unbalanced brackets" << endl;
+	}
+	else {
+		cout << "Balanced" << endl;
+	}
+
+}

@@ -1,0 +1,189 @@
+/*					Queue with Linked List
+
+	Very Imp, We need to insert right(Enqueue), and delete left(Dequeue)
+
+	fron and rear pointers will be used. rear will increment and point to latest node (just like in normal queue)
+
+
+
+*/
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	int e;	//To store data
+
+	struct node* next; // To point to next node
+};
+
+class LinkedList {
+
+
+public:
+
+	struct node* front;
+	struct node* rear;
+
+
+
+	void createList() {
+		
+		front =  NULL;
+		rear = NULL;
+	}
+
+
+	//Enqueue
+	void insertRight(int e) {
+
+		node* n = new node;
+		n->e = e;
+		n->next = NULL;
+
+		//If first node
+		if (rear == NULL) {
+			front = rear = n;	//Both front and rear will point to the first node
+		}
+
+		else {
+
+			rear->next = n;	//TO join link
+
+			rear = n;	//rear will point to new node
+		}
+	}
+
+	
+
+	//Dequeue
+	void deleteLeft() {
+
+		//If no nodes
+		if (rear == NULL) {
+			cout << "Queue empty " << endl;
+		}
+
+		else {
+
+			struct node* t;
+
+			//Saving front node to delete later
+			t = front;
+
+			//front will point to its next node
+			front = front->next;
+
+			//Shradhanjali
+			cout << "Deleted : " << t->e;
+
+			//Delete node where t is pointing to
+			delete t;
+
+			
+		}
+	}
+
+
+	
+	int isEmpty() {
+
+		if (rear == NULL) {
+			return 1;
+		}
+
+		else return 0;
+	}
+
+
+	void printQueue() {
+
+		struct node* t;
+
+		t = front;
+
+		//Going from front to rear (FIFO print)
+		while (t != NULL) {
+			cout << t->e << " ";
+			t = t->next;
+		}
+	}
+
+
+};
+
+int main() {
+
+	int e, choice;
+
+	LinkedList list;
+
+	//Initialise first and last to NULL.
+	list.createList();
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Enqueue " << endl;
+		cout << "2. Dequeue " << endl;
+		cout << "3. PrintStack " << endl;
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+
+		//Enqueuing
+		case 1:
+
+			cout << "Enter element " << endl;
+			cin >> e;
+
+			//Same as push() (Pushing on the left side)
+			list.insertRight(e);
+
+			break;
+
+
+		//Dequeuing
+		case 2:
+
+			//Dequeue the oldest element (FIFO)
+			list.deleteLeft();
+			break;
+
+
+		case 3:
+			
+			if (list.isEmpty() == 1) {
+				cout << "Empty queue" << endl;
+			}
+
+			else {
+				list.printQueue();
+				cout << endl;
+			}
+			
+			break;
+
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

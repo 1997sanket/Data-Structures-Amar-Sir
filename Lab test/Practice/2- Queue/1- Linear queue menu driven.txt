@@ -1,0 +1,126 @@
+#include<iostream>
+
+using namespace std;
+
+int Q[100], MaxSize, front, rear;
+
+void initQueue(int size)
+{
+	front = 0;
+	rear = -1;
+	MaxSize = size;
+}
+
+
+
+void enqueue(int e)
+{
+	if (rear == MaxSize - 1)
+	{
+		cout << "Queue is full" << endl;
+	}
+
+	else
+	{
+		Q[++rear] = e;
+	}
+}
+
+
+int dequeue()
+{
+	if ((front > rear) || (rear == -1))
+	{
+		cout << "Queue is empty" << endl;
+	}
+
+	else
+	{
+		int e = Q[front++];
+		return e;
+	}
+}
+
+
+void printQueue()
+{
+	for (int i = front; i <= rear; i++)
+	{
+		cout << " " << Q[i] << " ";
+	}
+
+	cout << endl;
+}
+
+
+int main() {
+
+	int c;
+	int size;
+	int e;
+
+	cout << "Enter size" << endl;
+	cin >> size;
+	initQueue(size);
+	
+
+	do
+	{
+		cout << "ENter choice" << endl;
+		
+		cout << "1. Enqueue" << endl;
+		cout << "2. Dequeue" << endl;
+		cout << "3. Print queue" << endl;
+		cout << "4. Exit" << endl;
+		
+
+		
+
+		cin >> c;
+
+		
+		switch (c)
+		{
+	
+
+		case 1:
+		{
+			cout << "ENter element" << endl;
+			cin >> e;
+			enqueue(e);
+			break;
+		}
+
+		case 2:
+		{
+			
+			e = dequeue();
+			cout << "Dequeued " << e << endl;
+			break;
+		}
+
+		case 3:
+		{
+			
+			printQueue();
+			break;
+		}
+
+		case 4:
+		{
+			
+			exit(1);
+			break;
+		}
+
+		
+		default: cout << "Incorrect choice" << endl;
+		}
+
+
+		
+
+	} while (c != 4);
+
+	return 0;
+}

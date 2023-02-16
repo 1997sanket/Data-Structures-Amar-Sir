@@ -1,0 +1,13 @@
+1. Follows LIFO principle
+
+2. Example would be Mumbai Local. Person entering last(on the foot board) will come out first.
+
+3. Industry example : Our Emails are stacked. First message goes down, latest message(last) comes on the top.
+
+4. ADT 
+	push(int e)	//Pushes element
+	pop() : e	//Removes latest element and reduces "Top of stack" (tos) variable 
+	isFull()	
+	isEmpty()
+	atTop() : e	//Just removes the top most element, doesnt decrement "tos"
+	printStack()	//Prints in LIFO format

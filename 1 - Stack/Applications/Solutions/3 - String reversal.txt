@@ -1,0 +1,90 @@
+#include<iostream>
+
+using namespace std;
+
+char S[100];
+int tos;
+int MaxSize;
+
+//Initialize Stack size
+void initSize(int size) {
+
+	MaxSize = size;
+	tos = -1;	//tos starts from -1
+}
+
+//Whether Stack is full or not
+char isFull() {
+	if (tos == MaxSize - 1)
+		return 1;
+	else
+		return 0;
+}
+
+
+//Push 
+void push(char e) {
+	tos++;
+	S[tos] = e;	//For the first element S[0] = 10;
+}
+
+
+//Check whether Stack is empty
+char isEmpty() {
+	if (tos == -1) return 1;
+
+	else return 0;
+}
+
+
+//Pop
+int pop() {
+
+	char temp = S[tos];	//First secure the current element
+	tos--;	//decrement tos
+
+	return temp;	//return the secured element
+}
+
+
+//Top most element
+char atTop() {
+	return S[tos];
+}
+
+
+//Printing Stack(LIFO print)
+void printStack() {
+	int i;
+
+	for (i = tos; i >= 0; i--) {
+		cout << S[i] << " ";
+	}
+
+	cout << endl;
+}
+
+int main() {
+
+	char arr[100];
+
+	cout << "Enter a String " << endl;
+	cin >> arr;
+
+	int length = strlen(arr);
+
+	cout << "Length : " << length << endl;
+
+	//Sending length of array to initialize the Stack
+	initSize(length);
+
+	//Pushing in the Stack
+	for (int i = 0; i < length; i++) {
+		
+		push(arr[i]);
+	}
+
+	cout << "Reversed String : ";
+	printStack();
+
+}

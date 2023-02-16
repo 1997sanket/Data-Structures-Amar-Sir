@@ -1,0 +1,6 @@
+1. Whenever we have hierchical structure and want sequential access, we can go with Threaded binary tree.
+
+2. Eg: Youtube servers may have their videos scattered, but when we play a playlist, videos are played one 
+   after other sequentially. there we can use Threaded binary tree.
+
+3. TBT is a modified version of BST, where we can do sequential access without recurrsion in nomral BST.

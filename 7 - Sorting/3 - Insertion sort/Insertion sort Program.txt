@@ -1,0 +1,63 @@
+//Insertion Sort
+
+
+/*
+
+	1. Main idea is to have 2 parts in the array, sorted part and unsorted part.
+
+	2. Initially sorted part will be just the firt element, but then it will compare with its next and we have 2 sorted elements and so on.
+
+	3. Also we have to right shift, and insert the new element in the correct position.
+
+
+*/
+
+#include<iostream>
+
+using namespace std;
+
+int *  Insertion_sort(int arr[], int size) {
+
+	int i, j, newElement;
+	
+	// 'size-1' because we are writing j = i+1
+	for (i = 0; i <size-1; i++) {
+
+		
+		j = i + 1;
+		newElement = arr[j];
+
+		// 'j>0' because we using 'j-1' so we dont 'j-1' for comparision to go to negative index  AND if new element is less than previous element in the sorted part
+		while ( (j > 0)  && (newElement < arr[j-1]) ) {
+
+			//THen right shift the sorted element
+			arr[j] = arr[j - 1];
+
+			//Decrement 'j' for further checking in the sorted part
+			j--;
+		}
+
+
+		//After coming out of the while loop, we have right shifted sorted part, but we need to insert new element in the index where 'j' stopped  
+		arr[j] = newElement;
+	}
+
+
+	return arr;
+
+}
+
+int main() {
+
+	
+	int arr[5] = {3, 2, 4, 1, 5};
+
+
+	int * p = Insertion_sort(arr, 5);
+
+
+	for (int i = 0; i < 5; i++) {
+		cout << p[i] << " ";
+	}
+
+}

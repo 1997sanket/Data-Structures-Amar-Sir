@@ -1,0 +1,213 @@
+#include<iostream>
+
+using namespace std;
+
+
+char S[100];
+int tos;
+int MaxSize;
+
+//Initialize Stack size
+void initSize(int size) {
+
+	MaxSize = size;
+	tos = -1;	//tos starts from -1
+}
+
+//Whether Stack is full or not
+char isFull() {
+	if (tos == MaxSize - 1)
+		return 1;
+	else
+		return 0;
+}
+
+
+//Push 
+void push(char e) {
+	tos++;
+	S[tos] = e;	//For the first element S[0] = 10;
+}
+
+
+//Check whether Stack is empty
+char isEmpty() {
+	if (tos == -1) return 1;
+
+	else return 0;
+}
+
+
+//Pop
+int pop() {
+
+	char temp = S[tos];	//First secure the current element
+	tos--;	//decrement tos
+
+	return temp;	//return the secured element
+}
+
+
+//Top most element
+char atTop() {
+	return S[tos];
+}
+
+
+//Printing Stack(LIFO print)
+void printStack() {
+	int i;
+
+	for (i = tos; i >= 0; i--) {
+		cout << S[i] << " ";
+	}
+
+	cout << endl;
+}
+
+int main() {
+
+	char arr[100], PostFix[100];
+
+	cout << "Enter Infix" << endl;
+	cin >> arr;
+
+	//Getting length
+	int length = strlen(arr);
+	//cout << "Length of Infix : " << length<<endl;
+
+	//Init stack with the length
+	initSize(length);
+
+
+	//Counter for PostFix array
+	int j = 0;
+
+
+	//cout << "Reading Infix fron left to right" << endl;
+	//Read Infix from left to right
+	for (int i = 0; i < length; i++) {
+
+		//If element is '('
+		if (arr[i] == '(') {
+
+			//cout << "Pushing " << arr[i] << endl;
+
+			//Push
+			push(arr[i]);
+			continue;
+		}
+
+
+		//If element is ')'
+		else if (arr[i] == ')') {
+
+			char e;
+
+			//Copy everything from Stack to PostFix till we reach '('
+			e = pop();
+			while (e != '(') {
+				//cout << "Copying " << e << " from stack to PostFix" << endl;
+				PostFix[j] = e;
+				j++;
+
+				e = pop();
+			}
+
+			//After this while loop, stack becomes empty, tos = -1
+
+
+		}
+
+
+		//If element is an Operand (a,b,c...)
+		else if (((int)arr[i] >= 97) && ((int)arr[i] <= 122)) {
+
+			//cout << "Putting in PostFix " << arr[i] << endl;
+
+			//If Operand, then directly copy to PostFix array.
+			PostFix[j] = arr[i];
+			j++;
+
+			continue;
+		}
+
+
+		//If element is an Operator(+, -, /, *, %, ^)
+		else if ((arr[i] == '+') || (arr[i] == '-') || (arr[i] == '*') || (arr[i] == '/') || (arr[i] == '%')) {
+
+			//Checking precedence
+
+			//If precedence of Operator on 'tos' is  <  than the new Opertor     OR      Stack doesn't have any opertor		OR		tos = -1
+			if ((((S[tos] == '+') || (S[tos] == '-')) && ((arr[i] == '*') || (arr[i] == '/') || (arr[i] == '%')))
+
+				||
+
+				(S[tos] == '(')
+
+				||
+
+				(tos == -1)) {
+
+
+				//cout << "Pushing " << arr[i] << endl;
+				push(arr[i]);
+			}
+
+			else {
+
+				while ((((S[tos] == '+') || (S[tos] == '-')) && ((arr[i] == '*') || (arr[i] == '/') || (arr[i] == '%')))
+
+					||
+
+					(S[tos] == '(')
+
+					||
+
+					(isEmpty()!=1)) {
+
+
+					char e = pop();
+					//cout << "Popping " << e << endl;
+					PostFix[j] = e;
+					//cout << "Putting in PostFix " << arr[i] << endl;
+					j++;
+				}
+
+				//After while stack becomes empty, now add that new operator which has same precedence  as the exisiting
+				push(arr[i]);
+
+			}
+		}
+
+		//cout << "PostFix[i] = " << PostFix[i] << endl;
+	}
+
+
+	//cout<< "Copy remaining element in PostFix"<< endl;
+	while (isEmpty() != 1) {
+		char e = pop();
+		PostFix[j] = e;
+		j++;
+	}
+
+
+	int length2 = j;
+
+	//cout << "PostFix length : "<<length2 << endl;
+
+
+	cout << "PostFix : ";
+
+	//Printing
+	for (int i = 0; i < length2; i++) {
+		cout << PostFix[i];
+	}
+
+	//(a+b)*(c-d)
+	//a+b-c*d
+
+
+
+
+}

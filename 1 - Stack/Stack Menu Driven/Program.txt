@@ -1,0 +1,150 @@
+/*
+   tos -> Top Of Stack (starts from -1)
+
+*/
+
+
+
+#include<iostream>
+using namespace std;
+
+
+int S[100], MaxSize, tos;
+
+//Initialize Stack size
+void initSize(int size) {
+
+	MaxSize = size;
+	tos = -1;	//tos starts from -1
+}
+
+//Whether Stack is full or not
+int isFull() {
+	if (tos == MaxSize - 1)
+		return 1;
+	else
+		return 0;
+}
+
+
+//Push 
+void push(int e) {
+	tos++;
+	S[tos] = e;	//For the first element S[0] = 10;
+}
+
+
+//Check whether Stack is empty
+int isEmpty() {
+	if (tos == -1) return 1;
+
+	else return 0;
+}
+
+
+//Pop
+int pop() {
+
+	int temp = S[tos];	//First secure the current element
+	tos--;	//decrement tos
+
+	return temp;	//return the secured element
+}
+
+
+//Top most element
+int atTop() {
+	return S[tos];
+}
+
+
+//Printing Stack(LIFO print)
+void printStack() {
+	int i;
+
+	for (i = tos; i >= 0; i--) {
+		cout << S[i] << " ";
+	}
+
+	cout << endl;
+}
+
+int main() {
+	int size, choice, e;
+
+	cout << "Enter size : ";
+	cin >> size;
+
+	initSize(size);
+
+
+	do {
+
+		cout << "1. Push " << endl;
+		cout << "2. Pop " << endl;
+		cout << "3. atTop " << endl;
+		cout << "4. Print " << endl;
+		cout << "5. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+
+			case 1: 
+				
+				if (isFull() == 1) {
+				cout << "Stack full" << endl;
+			}
+				else {
+				cout << "Enter element" << endl;
+				cin >> e;
+
+				push(e);
+			}
+
+				break;
+
+
+			case 2:
+
+				if (isEmpty() == 1) cout << "Stack empty" << endl;
+
+				else {
+					int e = pop();
+					cout << "Popped : " << e << endl;
+				}
+				break;
+
+
+			case 3  :
+
+				if(isEmpty() == 1) cout << "Stack empty" << endl;
+
+				else {
+					int e = atTop();
+					cout << "at Top : " << e << endl;
+				}
+				break;
+
+
+			case 4:
+
+				if (isEmpty() == 1) cout << "Stack empty" << endl;
+
+				else {
+					printStack();
+				}
+				break;
+
+
+			case 5:
+				cout << "Exiting" << endl;
+				exit(1);
+			
+			default :
+				cout << "Error, enter correct choice" << endl;
+		}
+
+
+	} while (choice != 5);
+}

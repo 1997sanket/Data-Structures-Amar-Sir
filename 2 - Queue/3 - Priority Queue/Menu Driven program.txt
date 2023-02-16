@@ -1,0 +1,215 @@
+//Priority Queue (FIFO)
+
+//1 is for Ascending
+//2 is for Descending 
+
+//This program implements Ascending (You can only do 1 at a time)
+
+#include<iostream>
+
+using namespace std;
+
+//Global 
+int Q[100], MaxSize, front, rear;
+
+//ADT
+
+void createList(int size) {
+
+	MaxSize = size;
+	front = 0;
+	rear = -1;
+}
+
+int isFull() {
+	//We increase rear then enter element
+	if (rear == MaxSize - 1)  return 1;
+
+	else return 0;
+}
+
+
+//SOrt for ascending
+void ascSort() {
+
+	int i, j, t;
+
+
+	//Bubble SOrt
+	//				i <= 3 - 1 
+	for (i = front; i <= rear - 1; i++) {
+		//			j <= 3 - 1 - i			
+		for (j = front; j <= rear - 1 - i; j++) {
+
+			if (Q[j] > Q[j + 1]) {
+
+				t = Q[j];
+				Q[j] = Q[j + 1];
+				Q[j + 1] = t;
+			}
+		}
+
+	}
+
+
+}
+
+
+//SOrt for descending
+void dscSort() {
+
+
+	int i, j, t;
+
+
+	//Bubble SOrt
+	//			i <= 3 - 1
+	for (i = front; i <= rear - 1; i++) {
+		//			j <= 3 - 1 - i			
+		for (j = front; j <= rear - 1 - i; j++) {
+
+			if (Q[j] > Q[j + 1]) {
+
+				t = Q[j];
+				Q[j] = Q[j + 1];
+				Q[j + 1] = t;
+			}
+		}
+
+	}
+}
+
+
+
+void enqueue(int priority, int e) {
+
+	//FOr first, rear is at -1
+	rear++;	//rear becomes 0
+
+	Q[rear] = e;
+
+	if (priority == 1) {
+		ascSort();
+	}
+	else {
+		dscSort();
+	}
+
+
+}
+
+
+
+int isEmpty() {
+
+	if (front > rear) return 1;
+
+	else return 0;
+}
+
+
+int dequeue() {
+
+	//For first dequeue front is at 0
+	int temp = Q[front];
+
+	front++;	//front is now at 1
+
+	return temp;
+}
+
+//Print in FIFO
+void printQueue() {
+
+	for (int i = front; i <= rear; i++) {
+		cout << Q[i] << " ";
+	}
+}
+
+int main() {
+
+	int size, choice, e;
+
+	cout << "Enter size" << endl;
+	cin >> size;
+
+	//Creating Queue of this size
+	createList(size);
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Enqueue " << endl;
+		cout << "2. Dequeue " << endl;
+		cout << "3. printQueue " << endl;
+		cout << "4. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			if (isFull() == 1) {
+				cout << "Queue is Full" << endl;
+			}
+
+			else {
+
+				cout << "Enter element to enqueue " << endl;
+				cin >> e;
+				enqueue(1, e);
+			}
+			break;
+
+
+
+		case 2:
+
+			if (isEmpty() == 1) {
+				cout << "Queue is empty" << endl;
+			}
+
+			else {
+				e = dequeue();
+				cout << "Dequeued :  " << e << endl;
+			}
+			break;
+
+
+
+		case 3:
+
+			if (isEmpty() == 1) {
+
+				cout << "EMpty" << endl;
+			}
+
+			else {
+				printQueue();
+				cout << endl;
+			}
+			break;
+
+
+		case 4:
+
+			exit(1);
+			break;
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 4);
+
+
+}

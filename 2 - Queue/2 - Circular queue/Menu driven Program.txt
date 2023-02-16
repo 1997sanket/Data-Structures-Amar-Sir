@@ -1,0 +1,172 @@
+//Circular Queue (FIFO)
+
+//Here c is for counting elements
+
+#include<iostream>
+using namespace std;
+
+
+//Global 
+int Q[100], MaxSize, front, rear, c;
+
+//ADT
+
+void createList(int size) {
+
+	MaxSize = size;
+	front = 0;
+	rear = -1;
+
+	//At the beginning, we have no elements so count = 0
+	c = 0;
+}
+
+int isFull() {
+
+	//Queue will  be full when count = MaxSize (count(4) == MaxSize(4))
+	if (c == MaxSize)  return 1;
+
+	else return 0;
+}
+
+
+void enqueue(int e) {
+
+	//FOr first, rear is at -1
+	rear = (rear + 1) % MaxSize;	//rear  = (-1 + 1) % 4 = 0
+
+	Q[rear] = e;
+	c++;    //Number of elements increases with each enqueue
+}
+
+
+int isEmpty() {
+
+	//Its obvious, count is for counting the number of element, so if count is zero that means there is no element present
+	if (c == 0) return 1;
+
+	else return 0;
+}
+
+
+int dequeue() {
+
+	//For first dequeue front is at 0
+	int temp = Q[front];
+
+	front = (front + 1) % MaxSize;	//front is now at 1,  front = (0 + 1) % 4 = 1 
+
+	c--; //Number of elements decreases with each dequeue
+
+	return temp;
+}
+
+//Print in FIFO
+void printQueue() {
+
+	int i, j;
+
+	/*
+		Offcourse we have to start printing from where currently front is so i = front.
+
+		Since count = 4(we have 4 element) so we have to print 4 elements, that means we need 1 more variable to go till 4.
+		that's why j=1 and in condition j<=4.
+
+		since i can also go back to 0th position, we need the same expression as we used for front and rear.
+
+	*/
+	for (i = front, j = 1; j <= c; i = ((i + 1) % MaxSize)) {
+
+		cout << Q[i] << " ";
+
+		
+		j++; // Need to increase as we have to print 4 elements
+	}
+}
+
+int main() {
+
+	int size, choice, e;
+
+	cout << "Enter size" << endl;
+	cin >> size;
+
+	//Creating Queue of this size
+	createList(size);
+
+	cout << "Select " << endl;
+
+	do {
+
+		cout << "1. Enqueue " << endl;
+		cout << "2. Dequeue " << endl;
+		cout << "3. printQueue " << endl;
+		cout << "4. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			if (isFull() == 1) {
+				cout << "Queue is Full" << endl;
+			}
+
+			else {
+
+				cout << "Enter element to enqueue " << endl;
+				cin >> e;
+				enqueue(e);
+			}
+			break;
+
+
+
+		case 2:
+
+			if (isEmpty() == 1) {
+				cout << "Queue is empty" << endl;
+			}
+
+			else {
+				e = dequeue();
+				cout << "Dequeued :  " << e << endl;
+			}
+			break;
+
+
+
+		case 3:
+
+			if (isEmpty() == 1) {
+
+				cout << "EMpty" << endl;
+			}
+
+			else {
+				printQueue();
+				cout << endl;
+			}
+			break;
+
+
+		case 4:
+
+			exit(1);
+			break;
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 4);
+
+
+}

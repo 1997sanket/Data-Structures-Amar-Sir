@@ -1,0 +1,6 @@
+1. Follows FIFO.
+
+2. Example : Ticket line.
+
+3. Industry example : Sending messages (what we send right away it goes), keyboard typing(what we press is 
+   show on screen). 

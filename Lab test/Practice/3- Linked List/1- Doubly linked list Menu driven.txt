@@ -1,0 +1,281 @@
+//Linked List
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	struct node* left;
+	int e;
+	struct node* right;
+};
+
+
+class LinkedList
+{
+public :
+	struct node* start = NULL;
+	struct node* end = NULL;
+
+	void insertRight(int e)
+	{
+		//Create node
+		node* n = new node;
+		n->left = NULL;
+		n->e = e;
+		n->right = NULL;
+
+		//If first node
+		if ((start == NULL) && (end == NULL))
+		{
+			start = n;
+			end = n;
+		}
+
+		else
+		{
+			n->left = end;
+			end->right = n;
+			end = n;
+		}
+	}
+
+
+	void insertLeft(int e)
+	{
+		//Create node
+		node* n = new node;
+		n->left = NULL;
+		n->e = e;
+		n->right = NULL;
+
+		
+		//If first node
+		if ((start == NULL) && (end == NULL))
+		{
+
+			start = n;
+			end = n;
+		}
+
+		else
+		{
+
+			n->right = start;
+			start->left = n;
+			start = n;
+		}
+	}
+
+
+	void deleteRight()
+	{
+		struct node* t = NULL;
+
+		if ((start == NULL) && (end == NULL))
+		{
+			cout << "List is empty" << endl;
+		}
+
+		else
+		{
+			t = end;
+			end = t->left;
+			end->right = NULL;
+			delete t;
+			t = NULL;
+		}
+	}
+
+
+	void deleteLeft()
+	{
+		struct node* t = NULL;
+
+		if ((start == NULL) && (end == NULL))
+		{
+			cout << "List is empty" << endl;
+		}
+
+		else
+		{
+			t = start;
+			start = t->right;
+			start->left = NULL;
+			delete t;
+			t = NULL;
+		}
+	}
+
+
+	void deleteElement(int e)
+	{
+		struct node* t = NULL;
+		struct node* temp = NULL;
+
+	
+			if ((start == NULL) && (end == NULL))
+			{
+				cout << "List is empty" << endl;
+			}
+
+			else
+			{
+				for (t = start; t != NULL; t = t->right)
+				{
+
+					//If found on the first node
+					if (start->e == e)
+					{
+						start = t->right;
+						start->left = NULL;
+						delete t;
+						t = NULL;
+						break;
+					}
+
+					//If found somewhere in middle
+					else if ((t->e == e) && (t != end))
+					{
+						temp = t;
+						(temp->left)->right = temp->right;
+
+						(temp->right)->left = temp->left;
+
+						delete temp;
+						temp = NULL;
+						t = NULL;
+						break;
+					}
+
+					//If found at end
+					else if(t==end)
+					{
+						end = t->left;
+						end->right = NULL;
+
+						delete t;
+						t = NULL;
+						break;
+					}
+				}
+
+
+			}
+
+		
+	}
+
+
+
+	//Print list
+	void printList()
+	{
+		struct node* t = NULL;
+
+		for (t = start; t != NULL; t = t->right)
+		{
+			cout << t->e << " ";
+		}
+
+		cout << endl;
+	}
+
+};
+
+int main() {
+
+	int c;
+	int e;
+
+	LinkedList l;
+	
+
+	do
+	{
+		cout << "ENter choice" << endl;
+		
+		cout << "1. Add node to right " << endl;
+		cout << "2. Add node to left " << endl;
+		cout << "3. Delete node from right " << endl;
+		cout << "4. Delete node from left " << endl;
+		cout << "5. Enter element to delete " << endl;
+		cout << "6. Print list " << endl;
+		cout << "7. Exit " << endl;
+
+		
+
+		
+
+		cin >> c;
+
+		
+		switch (c)
+		{
+	
+
+		case 1:
+		{
+			cout << "ENter element" << endl;
+			cin >> e;
+			l.insertRight(e);
+			break;
+		}
+
+		case 2:
+		{
+			
+			cout << "ENter element" << endl;
+			cin >> e;
+			l.insertLeft(e);
+			break;
+		}
+
+		case 3:
+		{
+			
+			l.deleteRight();
+			break;
+		}
+
+		case 4:
+		{
+			
+			l.deleteLeft();
+			break;
+		}
+
+		case 5:
+		{
+			cout << "Enter element to delte" << endl;
+			cin >> e;
+			l.deleteElement(e);
+			break;
+		}
+
+		case 6:
+		{
+
+			l.printList();
+			break;
+		}
+
+		case 7:
+		{
+
+			exit(1);
+			break;
+		}
+
+
+		
+		default: cout << "Incorrect choice" << endl;
+		}
+
+
+		
+
+	} while (c != 7);
+
+	return 0;
+}

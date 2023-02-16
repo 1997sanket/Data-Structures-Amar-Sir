@@ -1,0 +1,5 @@
+1. As the name is 'Selection', what to select ? 
+
+	We need to select the lowest element and put it at the start
+
+2. We are selection lowest element because we want ascending sort.

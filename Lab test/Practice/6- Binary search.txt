@@ -1,0 +1,57 @@
+//For binary search list must be in sorted order
+
+#include<iostream>
+
+using namespace std;
+
+void binary_search(int arr[], int size, int e)
+{
+	int start = 0;
+	int end = size - 1;	//9
+	int index = -1;
+
+
+	while (start <= end)
+	{
+
+		int mid = (start + end) / 2;	//4
+
+	//If no is less than the middle no
+		if (e < arr[mid])
+		{
+			end = mid - 1;	//4
+			mid = (start + end) / 2;	//2
+		}
+
+		else if (e > arr[mid])
+		{
+			start = mid + 1;
+			mid = (start + end) / 2;
+		}
+
+		//if found
+		else if (e == arr[mid])
+		{
+			index = mid;
+			break;
+		}
+
+	}
+
+	if (index == -1)
+		cout << "Element not found" << endl;
+
+	else
+		cout << "Found at index " << index << endl;
+	
+
+}
+
+int main() {
+
+	int arr[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+	binary_search(arr,10, 20);
+
+	return 0;
+}

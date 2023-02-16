@@ -1,0 +1,155 @@
+#include<iostream>
+
+using namespace std;
+
+
+char S[100];
+int tos;
+int MaxSize;
+
+//Initialize Stack size
+void initSize(int size) {
+
+	MaxSize = size;
+	tos = -1;	//tos starts from -1
+}
+
+//Whether Stack is full or not
+char isFull() {
+	if (tos == MaxSize - 1)
+		return 1;
+	else
+		return 0;
+}
+
+
+//Push 
+void push(char e) {
+	tos++;
+	S[tos] = e;	//For the first element S[0] = 10;
+}
+
+
+//Check whether Stack is empty
+char isEmpty() {
+	if (tos == -1) return 1;
+
+	else return 0;
+}
+
+
+//Pop
+int pop() {
+
+	char temp = S[tos];	//First secure the current element
+	tos--;	//decrement tos
+
+	return temp;	//return the secured element
+}
+
+
+//Top most element
+char atTop() {
+	return S[tos];
+}
+
+
+//Printing Stack(LIFO print)
+void printStack() {
+	int i;
+
+	for (i = tos; i >= 0; i--) {
+		cout << S[i] << " ";
+	}
+
+	cout << endl;
+}
+
+int main() {
+
+	char arr[100];
+
+	cout << "Enter PostFix" << endl;
+	cin >> arr;
+
+	//Getting length
+	int length = strlen(arr);
+	//cout << "Length of Infix : " << length<<endl;
+
+	//Init stack with the length
+	initSize(length);
+
+
+
+	//cout << "Reading Infix fron left to right" << endl;
+	//Read Infix from left to right
+	for (int i = 0; i < length; i++) {
+
+		//If element is Operand push on stack
+		if (((int)arr[i] >= 48) && ((int)arr[i] <= 57)) {
+			
+
+			//Push int values in the stack
+			push(((int)arr[i] - 48));
+
+			//cout << "Pushing : " << ((int)arr[i] - 48) << endl;
+		}
+		
+		//If element is an Operator
+		else if ((arr[i] == '+') || (arr[i] == '-') || (arr[i] == '*') || (arr[i] == '/') || (arr[i] == '%')) {
+
+			//Pop 2 elements
+			int e1 = pop();
+			//cout << "Popping : " << e1 << endl;
+			int e2 = pop();
+			//cout << "Popping : " << e2 << endl;
+
+			int result = 0;
+
+			if (arr[i] == '+') {
+				 result = e2 + e1;
+				
+			}
+
+			else if (arr[i] == '-') {
+				 result = e2 - e1;
+				
+			}
+			
+			else if (arr[i] == '*') {
+				 result = e2 * e1;
+				
+			}
+
+			else if (arr[i] == '/') {
+				 result = e2 / e1;
+				
+			}
+
+			else if (arr[i] == '%') {
+				 result = e2 % e1;
+				
+			}
+
+			push(result);
+			
+			//cout << "Pushing Result : " << result << endl;
+		}
+
+
+	}
+
+
+
+	cout << "Result : ";
+
+	//Printing
+	cout << pop() << endl;
+
+	//(a+b)*(c-d)
+	//a+b-c*d
+
+	//52+41-*
+
+
+}

@@ -1,0 +1,378 @@
+//  Doubly Linked List
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	int e;	//To store data
+
+	struct node* left; // To point to left side node
+	struct node* right; // To point to right side node
+	
+
+};
+
+class LinkedList {
+
+
+public:
+
+	struct node* root;
+	struct node* end;
+
+
+	void createList() {
+
+		root = end = NULL;
+	}
+
+
+	void insertLeft(int e) {
+
+		node* n = new node;
+
+		//Setting element of the new node as given by user
+		n->e = e;
+
+		//Setting n's pointer to NULL
+		n->left = NULL;
+		n->right = NULL;
+
+		//If root is NULL(no element) then this is our first and last element
+		if (root == NULL) {
+			root = end = n;
+		}
+
+		else {
+
+			//Our element's right will point to the first element
+			n->right = root;
+
+			//First element's left will point to new element
+			root->left = n;
+
+			//root will now point to the newest element
+			root = n;
+
+		}
+
+	}
+
+
+	void insertRight(int e) {
+
+		node* n = new node;
+		n->e = e;
+
+		//For new node, both left and right will be null
+		n->left = NULL;
+		n->right = NULL;
+
+		//If first node
+		if (root == NULL) {
+			root = end = n;
+
+		}
+
+		//For consecutive nodes
+		else {
+
+			cout << "Inserted : " << n->e << endl;
+
+			//Last element's right will point to the new element
+			end->right = n;
+
+			//New elements left will point to last element
+			n->left = end;
+
+			//This is our new last element now
+			end = n;
+		}
+	}
+
+
+	void deleteLeft() {
+
+		if (root == NULL) {
+			cout << "No nodes present " << endl;
+		}
+
+		else {
+
+
+			//Secure 1st node to delete later
+			struct node* t = root;
+
+
+			struct node* temp = NULL;
+
+			//Getting second node
+			temp = root->right;
+
+			
+			//First node's right will point to NULL
+			root->right = NULL;
+
+			//2nd node's left will point to NULL
+			temp->left = NULL;
+
+			//root will now point to 2nd node
+			root = temp;
+
+
+			//delete 1st
+			delete t;
+
+		
+
+		}
+	}
+
+
+
+	void deleteRight() {
+
+		if (root == NULL) {
+			cout << "No nodes " << endl;
+		}
+
+		else {
+
+			//Securing end node to delete later
+			struct node* t = end;
+
+
+			//We get second last node
+			struct node* temp = end->left;
+
+			//2nd last node's right is now pointing to NULL
+			temp->right = NULL;
+
+			
+			//2nd last node is now the new end node
+			end = temp;
+
+			//delete last node
+			delete t;
+
+		
+		}
+	}
+
+
+
+	/*void deleteElement(int e) {
+
+		struct node* t = root;
+
+		struct node* t2 = NULL;
+
+		//If node to be deleted is the first node
+		if (t->e == e) {
+			
+			root = t->next;
+
+			end->next = root;
+
+			delete t;
+		}
+
+		else {
+
+			do {
+
+				t2 = t;
+
+				t = t->next;
+
+
+			} while ((t->e != e) && (t!= root));
+
+
+			//If found on last node
+			if (t == end) {
+				t2->next = t->next;
+				end = t2;
+
+				delete t;
+			}
+
+			//If found somewhere in middle
+			else if (t->e == e) {
+
+				t2->next = t->next;
+
+				delete t;
+			}
+
+			//If not found
+			else {
+				cout << "Element not found " << endl;
+			}
+
+		}
+		
+
+	} */
+
+
+/*
+	void search(int e) {
+
+		struct node* t = root;
+
+		while (((t->e) != e) && (t != NULL)) {
+
+
+			t = t->next;
+		}
+
+		//t is on last element's null
+		if (t == NULL) {
+			cout << "No element found " << endl;
+		}
+		else {
+			cout << "Element found " << endl;
+		}
+
+	} */
+
+
+	void printLeftToRight() {
+
+
+		cout << "Printing" << endl;
+
+		struct node* t = root;
+
+		while (t != NULL) {
+			cout << t->e << " ";
+
+			//GO forward
+			t = t->right;
+		}
+	}
+
+
+	void printRightToLeft() {
+
+		struct node* t = end;
+
+		while (t != NULL) {
+			cout << t->e << " ";
+
+			//GO back
+			t = t->left;
+		}
+	}
+
+
+};
+
+int main() {
+
+	int e, choice;
+
+	LinkedList list;
+
+	//Initialise first and last to NULL.
+	list.createList();
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. InsertLeft " << endl;
+		cout << "2. InsertRight " << endl;
+		cout << "3. DeleteLeft " << endl;
+		cout << "4. DeleteRight " << endl;
+		cout << "5. PrintLeftToRight " << endl;
+		cout << "6. PrintRightToLeft " << endl;
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			cout << "Enter element " << endl;
+			cin >> e;
+
+			list.insertLeft(e);
+
+			break;
+
+
+
+		case 2:
+
+			cout << "Enter element " << endl;
+			cin >> e;
+
+			list.insertRight(e);
+			break;
+
+
+
+		case 3:
+
+			list.deleteLeft();
+
+			break;
+
+
+		case 4:
+
+			list.deleteRight();
+
+			break;
+
+
+		case 5:
+
+			if (list.root == NULL && list.end == NULL) {
+				cout << "List is empty" << endl;
+			}
+
+			else {
+				list.printLeftToRight();
+				cout << endl;
+			}
+
+			break;
+
+
+
+		case 6:
+
+			if (list.root == NULL && list.end == NULL) {
+				cout << "List is empty" << endl;
+			}
+
+			else {
+				list.printRightToLeft();
+				cout << endl;
+			}
+
+			break;
+
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

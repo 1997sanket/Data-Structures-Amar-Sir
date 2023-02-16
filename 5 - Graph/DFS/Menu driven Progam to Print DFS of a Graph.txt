@@ -1,0 +1,113 @@
+// We are using 'V' just for printing purpose so we get clear picture it is as a vertex or a node
+
+#include<iostream>
+
+using namespace std;
+
+
+int Adj[10][10];
+static int Visited[10]; //Static because we want this array to initialize with zeros (This is C's static)
+int nodes;
+
+
+
+void create_Graph_Matrix(int size) {
+
+	nodes = size;
+
+	for (int i = 0; i < size; i++) {
+
+		for(int j = 0; j < size; j++) {
+
+			//Example 'Enter cost from V0 to V0'
+			cout << "Enter cost from " <<"V" << i << " to " <<"V" << j << endl;
+
+			
+
+			cin >> Adj[i][j];
+
+			cout << "Entered : " << Adj[i][j]<<endl;
+		}
+	}
+}
+
+
+
+void DFS(int source) {
+
+	Visited[source] = 1;
+
+	//Example 'V0-V1-V2...'
+	cout << "V" << source << "-";
+
+
+	for (int i = 0; i < nodes; i++) {
+
+		//If connection/relation exists and node is not visited
+		if ( (Adj[source][i] == 1) && (Visited[i] == 0) ) {
+
+			//Send the next node(vertex)
+			DFS(i);
+		}
+	}
+
+
+}
+
+
+int main() {
+
+	int choice;
+	int size;
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Create Graph Matrix " << endl;
+		cout << "2. Print DFS " << endl;
+		
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			cout << "Enter size of the graph " << endl;
+			cin >> size;
+
+			create_Graph_Matrix(size);
+
+			break;
+
+
+
+		case 2:
+
+			//Passing source node as 0
+			DFS(0);
+			break;
+
+
+
+
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

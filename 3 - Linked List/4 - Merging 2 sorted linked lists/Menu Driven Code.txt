@@ -1,0 +1,550 @@
+/*
+
+ 	 Merging 2 sorted Linked Lists into another	
+
+	1. Enter sorted elements for 1st list (press 0 when done entering)
+	2. Enter sorted elements for 2nd list (press 0 when done entering)
+
+
+
+*/
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	int e;	//To store data
+
+	struct node* next; // To point to next node
+};
+
+class LinkedList {
+
+
+public:
+
+	struct node* root;
+	struct node* end;
+
+
+	void createList() {
+
+		root = end = NULL;
+	}
+
+
+	void insertLeft(int e) {
+
+		node* n = new node;
+
+		//Setting element of the new node as given by user
+		n->e = e;
+
+		//Setting n's pointer to NULL
+		n->next = NULL;
+
+		//If root is NULL(no element) then this is our first and last element
+		if (root == NULL) {
+			root = end = n;
+		}
+
+		else {
+			//Our element's next will point to the first element
+			n->next = root;
+
+			//root will now point to the newest element
+			root = n;
+		}
+
+	}
+
+
+	void insertRight(int e) {
+
+		node* n = new node;
+		n->e = e;
+		n->next = NULL;
+
+		if (root == NULL) {
+			root = end = n;
+		}
+
+		else {
+
+			cout << "Inserted : " << n->e << endl;
+
+			//Last element's next will point to the new element
+			end->next = n;
+
+			//This is our new last element now
+			end = n;
+		}
+	}
+
+
+	void deleteLeft() {
+
+		if (root == NULL) {
+			cout << "No nodes present " << endl;
+		}
+
+		else {
+
+
+			cout << "Deleted : " << root->e;
+
+			struct node* temp = root;
+
+			//Root will now point to next node
+			root = root->next;
+
+			delete temp;	//deleting first node
+
+		}
+	}
+
+
+
+	void deleteRight() {
+
+		if (end == NULL) {
+			cout << "No nodes " << endl;
+		}
+
+		else {
+
+			struct node* t = root;
+			struct node* t2 = NULL;
+
+			while (t != end) {
+				t2 = t;
+
+				t = t->next;
+			}
+
+			//End will now point to second last node
+			end = t2;
+
+			//Last node's next should be NULL
+			end->next = NULL;
+
+			cout << "t2 = " << t2->e << endl;
+
+			cout << "Deleted : " << t->e << endl;
+			//delete last node
+			delete t;
+		}
+	}
+
+
+
+	void deleteElement(int e) {
+
+		struct node* t = root;
+
+		struct node* t2 = NULL;
+
+		while ((t->e != e) && (t != NULL)) {
+			t2 = t;
+
+			t = t->next;
+		}
+
+		//If its the first element
+		if (t == root) {
+			cout << "Deleted : " << t->e << endl;
+
+			//root will point to 2nd element
+			root = t->next;
+
+			//Delete first element
+			delete t;
+		}
+		//t is on last element's null
+		else if (t == NULL) {
+			cout << "No element found " << endl;
+		}
+		else {
+
+			cout << "Deleted : " << t->e << endl;
+
+			t2->next = t->next;
+
+			//In case we found element at the end, then end will point to the second last 
+			if (t->next == NULL) {
+				end = t2;
+			}
+
+			delete t;
+		}
+	}
+
+
+
+	void search(int e) {
+
+		struct node* t = root;
+
+		while (((t->e) != e) && (t != NULL)) {
+
+
+			t = t->next;
+		}
+
+		//t is on last element's null
+		if (t == NULL) {
+			cout << "No element found " << endl;
+		}
+		else {
+			cout << "Element found " << endl;
+		}
+
+	}
+
+
+	void printList() {
+
+
+		cout << "Printing" << endl;
+
+		struct node* t = NULL;
+
+		for (t = root; t != NULL; t = t->next) {
+			cout << t->e << " ";
+		}
+	}
+
+
+	//Returns address of root node
+	node * returnRoot() {
+		return root;
+	}
+
+
+	//Returns address of end node
+	node* returnEnd() {
+		return end;
+	}
+
+};
+
+
+
+
+
+
+//print Merge
+void printMerge(struct node* root,  struct node* end) {
+
+	struct node* t;
+
+	for (t = root; t != NULL; t = t->next) {
+
+		cout << t->e << " ";
+	}
+
+	cout << endl;
+}
+
+
+
+//Global function (MERGE)
+void  merge(node* root1, node* root2) {
+
+	//Our new node to be
+	struct node* n = NULL;
+
+	struct node* t1 = root1;
+	struct node* t2 = root2;
+
+	//For our new Merged List to be created
+	struct node* root = NULL;
+	struct node* end = NULL;
+
+
+
+
+	//Traverse
+	while ((t1 != NULL) && (t2 != NULL)) {
+
+
+		//If data of 1st list is less than data of 2nd list
+		if ((t1->e) < (t2->e)) {
+
+			n = new node;
+			n->e = t1->e;
+			n->next = NULL;
+
+			//Increment of 1st list
+			t1 = t1->next;
+
+		} else {
+
+			n = new node;
+
+			n->e = t2->e;
+
+			n->next = NULL;
+
+			//Increment on 2nd list
+			t2 = t2->next;
+		}
+
+
+
+
+		//If first node
+		if ( (root == NULL) && (end == NULL) ) {
+
+			root = end = n;
+
+		}
+		else {
+
+			//End node will point to this new node
+			end->next = n;
+
+			//NEw node is our end node now
+			end = n;
+		}
+
+	}
+
+
+	/*
+		WHen we get out of While loop, check whether t1 became NULL or t2 became NULL.
+
+		If t1 =NULL then traverse and copy all remaining nodes from list2
+
+		if t2 = NULl then traverse and copy all remaining nodes from list1
+
+	*/
+
+
+	n = NULL;	//n again pointing to NULL
+
+
+
+	//If t1 became NULL
+	if (t1 == NULL) {
+		
+		while (t2 != NULL) {
+
+			struct node* n1 = NULL;
+
+			 n1 = new node;
+			n1->e = t2->e;
+			n1->next = NULL;
+
+			//Increment t2
+			t2 = t2->next;
+
+			//Last node will point to new node
+			end->next = n1;
+
+			//New node will be the last node
+			end = n1;
+		}
+	}
+
+	//If t2 became NULL
+	else if(t2 == NULL) {
+
+		while (t1 != NULL) {
+
+			struct node* n1 = NULL;
+			n1= new node;
+			n1 ->e = t1->e;
+			n1 ->next = NULL;
+
+			//Increment t1
+			t1 = t1->next;
+
+			//Last node will point to new node
+			end->next = n1;
+
+			//New node will be the last node
+			end = n1;
+		}
+	}
+
+	printMerge(root, end);
+}
+
+
+
+
+
+
+
+
+
+int main() {
+
+	int e, choice;
+
+	LinkedList list;
+
+
+	struct node* root1 = NULL;
+	struct node* end1 = NULL;
+
+	struct node* root2 = NULL;
+	struct node* end2 = NULL;
+
+
+
+
+
+	for (int i = 1; i <= 2; i++) {
+
+
+
+
+		//Initialise first and last to NULL.
+		list.createList();
+
+		cout << "Select " << endl;
+
+		do {
+
+
+			cout << "1. InsertLeft " << endl;
+			cout << "2. InsertRight " << endl;
+			cout << "3. DeleteLeft " << endl;
+			cout << "4. DeleteRight " << endl;
+			cout << "5. DeleteElement " << endl;
+			cout << "6. Search " << endl;
+			cout << "7. PrintList " << endl;
+			cout << "0. Break " << endl;
+
+			cin >> choice;
+
+			switch (choice) {
+			case 1:
+
+				cout << "Enter element " << endl;
+				cin >> e;
+
+				list.insertLeft(e);
+
+				break;
+
+
+
+			case 2:
+
+				cout << "Enter element " << endl;
+				cin >> e;
+
+				list.insertRight(e);
+				break;
+
+
+
+			case 3:
+
+				list.deleteLeft();
+
+				break;
+
+
+			case 4:
+
+				list.deleteRight();
+
+				break;
+
+			case 5:
+
+				cout << "enter element to delete " << endl;
+				cin >> e;
+
+				list.deleteElement(e);
+
+				break;
+
+
+			case 6:
+
+				cout << "enter element to search " << endl;
+				cin >> e;
+
+				list.search(e);
+
+				break;
+
+			case 7:
+
+				if (list.root == NULL && list.end == NULL) {
+					cout << "List is empty" << endl;
+				}
+
+				else {
+					list.printList();
+					cout << endl;
+				}
+
+				break;
+
+			case 0:
+				break;
+
+			default:
+
+				cout << "Incorrect choice " << endl;
+				break;
+
+
+			}
+
+
+
+
+		} while (choice != 0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		if (i == 1) {
+
+			root1 = list.returnRoot();
+			end1 = list.returnEnd();
+		}
+
+
+		else if (i == 2) {
+
+			root2 = list.returnRoot();
+			end2 = list.returnEnd();
+		}
+
+	}
+
+	cout << "Root 1 element : " << root1->e << endl;
+	cout << "Root 2 element : " << root2->e << endl;
+
+
+	merge(root1, root2);
+	
+
+
+}

@@ -1,0 +1,257 @@
+//  BST Tree implementation using Doubly linked list
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	int e;	//To store data
+
+	struct node* left; // To point to left side node
+	struct node* right; // To point to right side node
+
+
+};
+
+class LinkedList {
+
+
+public:
+
+	struct node* root;
+
+	//Create 
+	void createList() {
+
+		root = NULL;
+	}
+
+
+
+	//Insert ( 'r' represents root node, 'n' is the new node to be added )
+	void insert(struct node* r, struct node* n) {
+
+		//If first node
+		//if (root == NULL) {
+			//root = n;
+		//}
+
+		//else {
+			//If new node value is less than the 'r' node value then go left
+			if ( n->e < r->e ) {
+
+				//If 'r' node left is NULL then only enter
+				if (r->left == NULL) {
+
+					cout << "Inserted : " << n->e << endl;
+					r->left = n;	//r left will point to n
+				}
+				else {
+					//Else again call insert by passing r's left side node and our new node to compare
+					insert(r->left, n);
+				}
+			}
+
+			//If new node is >= to r node
+			else {
+
+				//If r's right is NULL then directly add new node
+				if (r->right == NULL) {
+					cout << "Inserted : " << n->e << endl;
+					r->right = n;
+				}
+				else {
+					//Else again call insert by passing r's right side node and our new node to compare
+						insert(r->right, n);
+				}
+			}
+		//}
+	}
+
+
+	//InOrder print
+	void inOrder_Print(struct node * r) {
+
+		if (r != NULL) {
+
+			inOrder_Print(r->left);		//Go Left	(L)
+
+			cout << r->e << " ";		//Print		(P)
+
+			inOrder_Print(r->right);	//Go Right 	(R)
+		}
+	}
+	
+
+	//Count all node (User will pass root node and zero as count) (same as inorder)
+	int count_all_nodes(struct node* r, int count) {
+
+		if (r != NULL) {
+
+			count = count_all_nodes(r->left, count);		
+
+			//Instead of printing just raise count
+			count++;
+
+			//cout << r->e << " ";		
+
+			count = count_all_nodes(r->right, count);	
+
+			
+		}
+
+		return count;
+	}
+
+
+
+	//Count only leaf nodes (same as inorder)
+	int count_leaf_nodes(struct node* r, int count) {
+
+		if (r != NULL) {
+
+			count = count_leaf_nodes(r->left, count);
+
+			//Remember leaf nodes has left and right pointers as NULL
+			if ((r->left == NULL) && (r->right == NULL)) {
+				count++;
+			}
+
+
+			count = count_leaf_nodes(r->right, count);
+
+		}
+
+		return count;
+
+	}
+
+};
+
+int main() {
+
+	int e, choice;
+
+	LinkedList list;
+
+
+	//My Tree's root node (Taking root as 50)
+	struct node* r = NULL;
+	
+
+
+	cout << "Enter root node value " << endl;
+	r = new node;
+	r->left = NULL;
+	r->right = NULL;
+	cin >> r->e;
+
+	//root node
+	list.root = r;
+
+	//New node to be entered
+	struct node* n = NULL;
+
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Insert " << endl;
+		cout << "2. InOrder(LPR) print " << endl;
+		cout << "3. Count all nodes " << endl;
+		cout << "4. Count leaf nodes " << endl;
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			cout << "Enter new node value " << endl;
+			n = new node;
+			n->left = NULL;
+			n->right = NULL;
+			cin >> n->e;
+			
+
+			//insert root and new nodes
+			list.insert(r , n);
+
+			break;
+
+
+
+		case 2:
+
+			if (list.root == NULL) {
+				cout << "Empty list" << endl;
+			}
+
+			else {
+
+
+				list.inOrder_Print(r);
+				cout << endl;
+			}
+
+			break;
+
+
+
+		case 3:
+
+			if (list.root == NULL) {
+				cout << "EMpty" << endl;
+			}
+
+			else {
+
+				
+				int count = list.count_all_nodes(r, 0);
+
+				cout << "All nodes COunt = " << count<<endl;
+
+			}
+			
+
+			break;
+
+
+		case 4:
+
+			if (list.root == NULL) {
+				cout << "EMpty" << endl;
+			}
+
+			else {
+
+				
+				int count = list.count_leaf_nodes(r, 0);
+
+				cout << "Leaf nodes count = " << count<<endl;
+
+			}
+			break;
+
+
+		
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

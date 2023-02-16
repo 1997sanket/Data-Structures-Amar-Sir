@@ -1,0 +1,129 @@
+// BFS (checkout working properly)
+
+#include<iostream>
+
+using namespace std;
+
+
+int Adj[10][10];
+static int Visited[10];
+int nodes;
+int Q[100], MaxSize, front = 0, rear = -1;
+
+
+
+void create_Graph_Matrix(int size) {
+
+	nodes = size;
+
+	for (int i = 0; i < size; i++) {
+
+		for(int j = 0; j < size; j++) {
+
+			//Example 'Enter cost from V0 to V0'
+			cout << "Enter cost from " <<"V" << i << " to " <<"V" << j << endl;
+
+			
+
+			cin >> Adj[i][j];
+
+			cout << "Entered : " << Adj[i][j]<<endl;
+		}
+	}
+}
+
+
+
+void BFS(int source) {
+
+	//We got first element, so mark it as visited and enter in the queue
+	Visited[source] = 1;
+	Q[++rear] = source;
+
+	/*
+	  Now the idea is to remove each element from the Queue, visit its connected unvisited neigbours and add them in queue while 
+	  queue is not empty */
+
+	//WHile Queue is not empty
+	while (front <= rear) {
+
+		//Remove the current node from queue (0 for first time)
+		int e = Q[front++];
+
+		//Print it ( 'V0-' for the first time)
+		cout << "V" << e << "-";
+
+		//Now visit all its neighbour node
+		for (int i = 0; i < nodes; i++) {
+
+			//Mark as visited and add in Queue only if connection exists and unvisited
+			if ((Adj[e][i] == 1) && (Visited[i] == 0)) {
+
+				//Marks Visited as true
+				Visited[i] = 1;
+
+				//Add the element in Queue
+				Q[++rear] = i;
+			}
+		}
+	}
+
+}
+
+
+int main() {
+
+	int choice;
+	int size;
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Create Graph Matrix " << endl;
+		cout << "2. Print BFS " << endl;
+		
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+
+			cout << "Enter size of the graph " << endl;
+			cin >> size;
+
+			create_Graph_Matrix(size);
+
+			break;
+
+
+
+		case 2:
+
+			//Passing source node as 0
+			BFS(0);
+			break;
+
+
+
+
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

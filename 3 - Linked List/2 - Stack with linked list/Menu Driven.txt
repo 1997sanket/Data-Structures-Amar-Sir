@@ -1,0 +1,201 @@
+/*								Stack with Linked List
+
+	In this example, we only require 'tos' pointer. 
+
+	Very Very important, we need to do insertLeft so that while printing we can just print using 'tos'.
+
+
+	ANd thus latest node is on left most side. which can be deleted using 'tos'.
+
+
+*/
+
+#include<iostream>
+
+using namespace std;
+
+struct node {
+	int e;	//To store data
+
+	struct node* next; // To point to next node
+};
+
+class LinkedList {
+
+
+public:
+
+	struct node* tos;
+
+
+
+	void createList() {
+		
+		tos = NULL;
+	}
+
+
+	//Push
+	void insertLeft(int e) {
+
+		node* n = new node;
+		n->e = e;
+		n->next = NULL;
+
+		//If first node
+		if (tos == NULL) {
+			tos = n;
+		}
+
+		else {
+			n->next = tos;
+			tos = n;
+		}
+	}
+
+	
+
+	//POP
+	void deleteLeft() {
+
+		if (tos == NULL) {
+			cout << "Stack empty " << endl;
+		}
+
+		else {
+
+			struct node* t;
+
+			//Saving tos to delete later
+			t = tos;
+
+			//tos will point to its next node
+			tos = tos->next;
+
+			//Shradhanjali
+			cout << "Deleted : " << t->e;
+
+			//Delete node where t is pointing to
+			delete t;
+
+			
+		}
+	}
+
+
+	
+	int isEmpty() {
+
+		if (tos == NULL) {
+			return 1;
+		}
+
+		else return 0;
+	}
+
+
+	void atTop() {
+		cout<<"At Top :  "<< tos->e << endl;
+	}
+
+
+
+	void printStack() {
+
+		struct node* t;
+
+		t = tos;
+
+		while (t != NULL) {
+			cout << t->e << " ";
+			t = t->next;
+		}
+	}
+
+
+};
+
+int main() {
+
+	int e, choice;
+
+	LinkedList list;
+
+	//Initialise first and last to NULL.
+	list.createList();
+
+	cout << "Select " << endl;
+
+	do {
+
+
+		cout << "1. Push " << endl;
+		cout << "2. Pop " << endl;
+		cout << "3. at Top " << endl;
+		cout << "4. PrintStack " << endl;
+		cout << "0. Exit " << endl;
+
+		cin >> choice;
+
+		switch (choice) {
+
+		//Pushing
+		case 1:
+
+			cout << "Enter element " << endl;
+			cin >> e;
+
+			//Same as push() (Pushing on the left side)
+			list.insertLeft(e);
+
+			break;
+
+
+		//Pop
+		case 2:
+
+			//Pop the latest node
+			list.deleteLeft();
+			break;
+
+
+
+		case 3:
+
+			if (list.isEmpty() == 1) {
+				cout << "Empty stack" << endl;
+			}
+
+			else {
+				//
+				list.atTop();
+			}
+			
+
+			break;
+
+
+		case 4:
+
+			list.printStack();
+			cout << endl;
+			break;
+
+		case 0:
+			exit(1);
+
+		default:
+
+			cout << "Incorrect choice " << endl;
+			break;
+
+
+		}
+
+
+
+
+	} while (choice != 0);
+
+
+}

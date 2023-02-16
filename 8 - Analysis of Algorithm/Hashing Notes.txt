@@ -1,0 +1,28 @@
+1. Hashing is used for speeding the process of accessing data.
+
+2. Example in our Mobile phones, when we save a contact it is saved by an unique 'key'. Whenever that person
+   calls us, according to the number(key) the contact is searched in the phone and we see their name and maybe
+   picture.
+
+3. There are various ways of implementing hashing concept.
+ 	a) Direct hashing (rollno and name of student)		b) Subraction and many more
+
+
+4. Hash collision can occur when on the same key, there are multiple records. 
+
+5. Solutions : a)Probing b)Bucketing c)Chaining
+
+A) Probing :
+
+Like a parking lot, if not found space go to next. Drawback is lots of searching and thus slowing down.
+
+
+B) Bucketing : 
+
+We make a 2D array. For eg for 10 keys, we will make 10x10 array, new records come if not available in the
+first index, shift to next. But the drawback is memory.
+
+
+C) Chaining : 
+
+Similar to Bucketing but we use linked lists. So dynamic memory allocation. But drawback is, it can be complex

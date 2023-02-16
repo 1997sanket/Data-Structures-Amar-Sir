@@ -1,0 +1,22 @@
+1. Graph is basically a cyclic tree.
+
+2. Graph is a superset of Tree. So every Tree is a Graph. 
+
+3. There are various applocations of Graphs. Eg : Google maps, Social networking where each user is a node,
+   Minimum spanning tree(Extracting a tree from graph, maybe to broadcast message to all the nodes), 
+   Mobile finger pattern lock, Network connections, Transport, Wiring, Piping, etc.
+
+4. Graphs are programmatically represented as Adjency matrix or Adjency list. Adj Matrix is the most commonly
+   used. 
+
+5. BFS, DFS and A-star are search algorithms. We can use them to search some data in a Graph. A-star is the 
+   best one amongst them.
+
+6. MST is extracting a tree from a graph having minimum cost edges. Algorithms for doing these are 
+   Kruskal's algo and Prim's algo.
+
+7. Dijiktra's algo is used for finding shortest distance from one node to all other nodes.
+
+8. Floyd Warshall is used for finding shortest path from all the sources.
+
+

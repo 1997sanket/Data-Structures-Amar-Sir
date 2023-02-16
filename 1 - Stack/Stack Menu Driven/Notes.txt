@@ -1,0 +1,4 @@
+1. Stack follows Last in First out principle (LIFO)
+
+2. Real life examples : Messages we receive in email. Latest message is shown at the top, and older messages 
+   at the bottom. 

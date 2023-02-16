@@ -1,0 +1,117 @@
+
+
+#include<iostream>
+
+using namespace std;
+
+int Adj[10][10], nodes, front = 0, rear = -1, Q[100];
+static int Visited[10];
+
+void create_matrix(int size)
+{
+	nodes = size;
+
+	for (int i = 0; i < nodes; i++)
+	{
+		for (int j = 0; j < nodes; j++)
+		{
+			cout << "Enter V" << i << " to " << " V" << j << endl;
+			cin >> Adj[i][j];
+		}
+	}
+}
+
+//Vo is the source generally
+void traverse_BFS(int source)
+{
+	//Element marked as visited
+	Visited[source] = 1;
+
+	//put in queue
+	Q[++rear] = source;
+
+	//While the queue is not empty, remove element from queue and check its connected non visited neighbours, if found put them in queue
+
+	//While queue is not empty
+	while (front <= rear)
+	{
+		//Dequeue
+		int e = Q[front++];
+
+		//Searching or printing of the nodes can be done here
+		cout << "V" << e << "-";
+
+		for (int i = e; i < nodes; i++)
+		{
+			//IF connection exists and the element is not visited
+			if (Adj[e][i] == 1 && Visited[i] == 0)
+			{
+				//Enqueue
+				Q[++rear] = i;
+
+				//Mark as visited
+				Visited[i] = 1;
+			}
+		}
+	}
+}
+
+int main() {
+
+	int c;
+	int size;
+
+	
+
+	do
+	{
+		cout << "Enter choice" << endl;
+		
+		cout << "1. Create Matrix " << endl;
+		cout << "2. Print BFS " << endl;
+		cout << "3. Exit " << endl;
+
+
+		cin >> c;
+
+		
+		switch (c)
+		{
+	
+
+		case 1:
+		{
+			cout << "ENter Size " << endl;
+			cin >> size;
+			create_matrix(size);
+			break;
+		}
+
+		case 2:
+		{
+			
+			traverse_BFS(0);
+			break;
+		}
+
+		
+
+		case 3:
+		{
+
+			exit(1);
+			break;
+		}
+
+
+		
+		default: cout << "Incorrect choice" << endl;
+		}
+
+
+		
+
+	} while (c != 3);
+
+	return 0;
+}
